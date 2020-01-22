@@ -55,6 +55,8 @@ functions:
     # - method: GET request
   get:
     handler: get.main
+    environment: 
+      logs: SLS_DEBUG=*
     events:
       - http:
           path: notes/{id}
@@ -81,5 +83,16 @@ functions:
       - http:
           path: notes/{id}
           method: put
+          cors: true
+          authorizer: aws_iam
+  delete:
+    # Defines an HTTP API endpoint that calls the main function in delete.js
+    # - path: url path is /notes/{id}
+    # - method: DELETE request
+    handler: delete.main
+    events:
+      - http:
+          path: notes/{id}
+          method: delete
           cors: true
           authorizer: aws_iam
